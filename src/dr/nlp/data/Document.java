@@ -100,7 +100,7 @@ public class Document
 		marshaller.marshal( this, System.out );
 		
 		// Output XML document to a file
-		File outputFile = new File( "Document.xml" );
+		File outputFile = new File( name + ".xml" );
 		marshaller.marshal( this, outputFile );
 	}
 }

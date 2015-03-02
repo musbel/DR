@@ -1,12 +1,22 @@
 package dr.nlp;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.xml.bind.JAXBException;
 
 import dr.nlp.data.Document;
+import dr.nlp.tools.AnalyserThread;
 import dr.nlp.tools.AnalysisExecution;
 import dr.nlp.tools.NamedEntities;
 import dr.nlp.tools.SimpleAnalyser;
@@ -62,6 +72,27 @@ import dr.nlp.tools.SimpleTokeniser;
  *   seemed like just as much work as using N-grams, and having a more complicated
  *   NER structure as opposed to N-gram processing might be less attractive once
  *   the number of named entities grows.
+ *
+ * [Threading strategy thoughts]
+ * For maximum efficiency, each thread should work on a part of a document and move
+ * onto a different document when it's free, as opposed to having one thread working
+ * on a single document. That avoids having one thread grafting hard on a really long
+ * document, while other threads have finished their work and are just sat their idling.
+ * However, without serialisation using e.g. condition variable, the order in which 
+ * sentences are added to the documents is not guaranteed to be correct.
+ * 
+ * For simplicity, this implementation makes threads responsible for a whole document,
+ * and all the document is read in at once (which is not ideal for very large documents).
+ * 
+ * I tested having the thread spawned within the scanner read process instead of reading
+ * the whole document before passing the text to a document, and it works quite well, 
+ * albeit the sentence order is obviously not necessarily always correct with respect to
+ * the document. 
+ * 
+ * Using a document reader which can read chunks of the document on demand
+ * is preferable for really large documents, although care must be taken to make sure
+ * sentence boundaries are not spread across different chunks, and that objects pulling
+ * data don't contain any scheduling logic.
  */
  
 /** POSSIBLE IMPROVEMENTS
@@ -82,24 +113,63 @@ public class Exercise
 {
 	private static String nlpDataFilePath = "nlp_data.txt";
 	private static String entityFilename  = "NER.txt";
+	private static String zipPath         = "nlp_data.zip";
 	
 	private void runExercise()
 	{
-		String contents;
+		ExecutorService executor = Executors.newFixedThreadPool( 8 );
+
+		SimpleAnalyser analyser = new SimpleAnalyser();
+		SimpleTokeniser tokeniser = new SimpleTokeniser();	
+		NamedEntities entities = NamedEntities.getInstance( entityFilename );
+
+		List<Document> docs = new ArrayList<Document>();
 
 		try
 		{
-			contents = new String( Files.readAllBytes( Paths.get( nlpDataFilePath ) ) );
+			File zip = new File( zipPath );
+			ZipInputStream zin = new ZipInputStream( new FileInputStream( zip ) );
 
-			Document doc = new Document( nlpDataFilePath );
-			SimpleAnalyser analyser = new SimpleAnalyser();
-			SimpleTokeniser tokeniser = new SimpleTokeniser();
-			NamedEntities entities = NamedEntities.getInstance( entityFilename );
+			for ( ZipEntry zipEntry; ( zipEntry = zin.getNextEntry() ) != null; )
+			{
+				String entryName = zipEntry.getName();
 
-			AnalysisExecution e = new AnalysisExecution( contents, doc, analyser, tokeniser, entities );
-			e.execute();
+				if ( !entryName.endsWith( ".txt" ) || entryName.startsWith( "_" ) )
+				{
+					continue;
+				}
 
-			doc.toXml();
+				Document doc = new Document( entryName );
+				Scanner scanner = new Scanner( zin );
+
+				StringBuffer docBuffer = new StringBuffer();
+				while ( scanner.hasNextLine() )
+				{
+					String line = scanner.nextLine();
+					if ( !line.isEmpty() )
+					{
+						docBuffer.append( line );
+					}
+				}
+
+				AnalysisExecution model = new AnalysisExecution( docBuffer.toString(), doc, analyser, tokeniser, entities );
+				Runnable worker = new AnalyserThread( model );
+				executor.execute( worker );
+
+				docs.add( doc );
+			}
+
+			executor.shutdown();
+			while( !executor.isTerminated() )
+			{
+			}
+
+			zin.close();
+
+			for ( Document d : docs )
+			{
+				d.toXml();
+			}
 		}
 		catch( IOException e1 )
 		{
