@@ -49,6 +49,7 @@ public class Document
 			{
 				Word existingWord = wordMap.get( name );
 				existingWord.incrementCount();
+				existingWord.addNamedEntities( word.getNamedEntities() );
 			}
 			else
 			{

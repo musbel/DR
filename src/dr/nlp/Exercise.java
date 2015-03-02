@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 
 import dr.nlp.data.Document;
 import dr.nlp.tools.AnalysisExecution;
+import dr.nlp.tools.NamedEntities;
 import dr.nlp.tools.SimpleAnalyser;
 import dr.nlp.tools.SimpleTokeniser;
 
@@ -49,6 +50,18 @@ import dr.nlp.tools.SimpleTokeniser;
  *     - Commas after a quote containing a punctuation does not prevent a sentence
  *       boundary, e.g. "Don't drop it!", said his mother.
  *       Punctuation used for emphasis, surprise, etc. Tomorrow?! What time??
+ * - After pondering on how to represent the NER data, I ended up going for a basic
+ *   hash table, and create N-grams based on the maximum number of entities in the
+ *   NER container. I then compare the N-grams while processing the sentences, and
+ *   tag the words in the sentence with the named entity for reference. I was also
+ *   thinking about creating a more elaborate NER container, where the hash table
+ *   would be constructed using every token in the named entities, where duplicates
+ *   are represented in e.g. a linked list. Then instead of N-grams, I check each
+ *   processed word for an entry in the hash table. The possible candidates are then
+ *   compared against subsequent words in the sentence until a match is found. This
+ *   seemed like just as much work as using N-grams, and having a more complicated
+ *   NER structure as opposed to N-gram processing might be less attractive once
+ *   the number of named entities grows.
  */
  
 /** POSSIBLE IMPROVEMENTS
@@ -68,6 +81,7 @@ import dr.nlp.tools.SimpleTokeniser;
 public class Exercise
 {
 	private static String nlpDataFilePath = "nlp_data.txt";
+	private static String entityFilename  = "NER.txt";
 	
 	private void runExercise()
 	{
@@ -79,9 +93,10 @@ public class Exercise
 
 			Document doc = new Document( nlpDataFilePath );
 			SimpleAnalyser analyser = new SimpleAnalyser();
-			SimpleTokeniser tokeniser = new SimpleTokeniser();	
+			SimpleTokeniser tokeniser = new SimpleTokeniser();
+			NamedEntities entities = NamedEntities.getInstance( entityFilename );
 
-			AnalysisExecution e = new AnalysisExecution( contents, doc, analyser, tokeniser );
+			AnalysisExecution e = new AnalysisExecution( contents, doc, analyser, tokeniser, entities );
 			e.execute();
 
 			doc.toXml();

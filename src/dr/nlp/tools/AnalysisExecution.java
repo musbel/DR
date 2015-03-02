@@ -12,13 +12,15 @@ public class AnalysisExecution implements ExecutionUnit
 	private Document doc;
 	private SentenceAnalyser analyser;
 	private Tokeniser tokeniser;
+	private NamedEntities ner;
 
-	public AnalysisExecution( String text, Document doc, SentenceAnalyser analyser, Tokeniser tokeniser )
+	public AnalysisExecution( String text, Document doc, SentenceAnalyser analyser, Tokeniser tokeniser, NamedEntities ner )
 	{
 		this.text = text;
 		this.doc = doc;
 		this.analyser = analyser;
 		this.tokeniser = tokeniser;
+		this.ner = ner;
 	}
 
 	@Override
@@ -29,11 +31,22 @@ public class AnalysisExecution implements ExecutionUnit
 		for ( String sentence : sentences )
 		{
 			String[] words = tokeniser.tokenise( sentence );
+			List<String> ngrams = NGramHandler.getAllNGrams( words, ner.getMaxEntityTokens() );
+			List<String> namedEntities = ner.getNamedEntities( ngrams );
 			List<Word> wordList = new ArrayList<Word>();
 
 			for ( String word : words )
 			{
 				Word wordObj = new Word( word.toLowerCase() );
+				
+				for ( String entity : namedEntities )
+				{
+					if ( entity.contains( word ) )
+					{
+						wordObj.addNamedEntity( entity );
+					}
+				}
+				
 				wordList.add( wordObj );
 			}
 
