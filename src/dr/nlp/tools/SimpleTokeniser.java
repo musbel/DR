@@ -7,8 +7,26 @@ import java.util.regex.Pattern;
 
 public class SimpleTokeniser implements Tokeniser
 {
-	private static String regex = "\\b([\\w$£]*\\.\\w+\\.?|(\\w+\\'\\w+)\\b|\\d+/\\d+/\\d+\\b|\\w+(?:[-–]\\w+)*|(\\w+(?!\\.)|\\w+)\\b)";
+	private static String decAndAbbr = "[\\w$£]*\\.\\w+\\.?";
+	private static String apostrophe = "(\\w+\\'\\w+)\\b";
+	private static String dates = "\\d+/\\d+/\\d+\\b";
+	private static String hyphened = "\\w+(?:[-–]\\w+)*";
+	private static String wordsNoPunc = "(\\w+(?!\\.)";
+	private static String anyWord = "\\w+";
+	private static String regex = "\\b(" + decAndAbbr + "|" + apostrophe + "|" + dates + "|" + 
+									hyphened + "|" + wordsNoPunc + "|" + anyWord + ")\\b)";
+	private static String regexMatch = "\\b(" + decAndAbbr + "|" + apostrophe + "|" + dates + "|" + 
+										wordsNoPunc + "|" + anyWord + ")\\b)";
+	
+	private static Pattern pattern;
+	private static Pattern patternMatch;
 
+	public SimpleTokeniser()
+	{
+		pattern = Pattern.compile( regex );
+		patternMatch = Pattern.compile( regexMatch );
+	}
+	
 	@Override
 	public String[] tokenise( String sentence )
 	{
@@ -19,7 +37,6 @@ public class SimpleTokeniser implements Tokeniser
 
 		List<String> tokens = new ArrayList<String>();
 
-		Pattern pattern = Pattern.compile( regex );
 		Matcher matcher = pattern.matcher( sentence );
 
 		while( matcher.find() )
@@ -63,5 +80,20 @@ public class SimpleTokeniser implements Tokeniser
 		}
 
 		return tokens.toArray( new String[tokens.size()] );
+	}
+	
+	public boolean match( String text, String searchToken )
+	{
+		Matcher matcher = patternMatch.matcher( text.toLowerCase() );
+
+		while( matcher.find() )
+		{
+			if ( matcher.group().equals( searchToken.toLowerCase() ) )
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

@@ -575,9 +575,7 @@
             <key>on</key>
             <value>
                 <name>on</name>
-                <entities>
-                    <entity>Moon</entity>
-                </entities>
+                <entities/>
                 <count>4</count>
             </value>
         </entry>
@@ -585,9 +583,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>Earth</entity>
-                </entities>
+                <entities/>
                 <count>5</count>
             </value>
         </entry>

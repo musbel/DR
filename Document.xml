@@ -306,10 +306,7 @@
             <key>in</key>
             <value>
                 <name>in</name>
-                <entities>
-                    <entity>Franz Ferdinand</entity>
-                    <entity>Gavrilo Princip</entity>
-                </entities>
+                <entities/>
                 <count>3</count>
             </value>
         </entry>
@@ -687,10 +684,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>Austria-Hungary</entity>
-                    <entity>Serbia</entity>
-                </entities>
+                <entities/>
                 <count>1</count>
             </value>
         </entry>
@@ -746,9 +740,7 @@
             <key>austria-hungary</key>
             <value>
                 <name>austria-hungary</name>
-                <entities>
-                    <entity>Austria-Hungary</entity>
-                </entities>
+                <entities/>
                 <count>2</count>
             </value>
         </entry>

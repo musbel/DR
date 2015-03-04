@@ -546,9 +546,7 @@
             <key>and</key>
             <value>
                 <name>and</name>
-                <entities>
-                    <entity>England</entity>
-                </entities>
+                <entities/>
                 <count>4</count>
             </value>
         </entry>
@@ -627,10 +625,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>Wales</entity>
-                    <entity>Montgomery Castle</entity>
-                </entities>
+                <entities/>
                 <count>3</count>
             </value>
         </entry>

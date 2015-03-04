@@ -270,9 +270,7 @@
             <key>in</key>
             <value>
                 <name>in</name>
-                <entities>
-                    <entity>Michael Collins</entity>
-                </entities>
+                <entities/>
                 <count>1</count>
             </value>
         </entry>
@@ -478,10 +476,7 @@
             <key>on</key>
             <value>
                 <name>on</name>
-                <entities>
-                    <entity>Moon</entity>
-                    <entity>Neil Armstrong</entity>
-                </entities>
+                <entities/>
                 <count>2</count>
             </value>
         </entry>
@@ -489,10 +484,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>Earth</entity>
-                    <entity>Michael Collins</entity>
-                </entities>
+                <entities/>
                 <count>2</count>
             </value>
         </entry>

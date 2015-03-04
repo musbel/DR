@@ -726,9 +726,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>Antikythera</entity>
-                </entities>
+                <entities/>
                 <count>3</count>
             </value>
         </entry>
@@ -824,9 +822,7 @@
             <key>the</key>
             <value>
                 <name>the</name>
-                <entities>
-                    <entity>Antikythera</entity>
-                </entities>
+                <entities/>
                 <count>7</count>
             </value>
         </entry>

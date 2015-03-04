@@ -201,9 +201,7 @@
             <key>broyden–fletcher–goldfarb–shanno</key>
             <value>
                 <name>broyden–fletcher–goldfarb–shanno</name>
-                <entities>
-                    <entity>Broyden–Fletcher–Goldfarb–Shanno</entity>
-                </entities>
+                <entities/>
                 <count>1</count>
             </value>
         </entry>
@@ -317,9 +315,7 @@
             <key>an</key>
             <value>
                 <name>an</name>
-                <entities>
-                    <entity>Broyden–Fletcher–Goldfarb–Shanno</entity>
-                </entities>
+                <entities/>
                 <count>2</count>
             </value>
         </entry>
@@ -633,9 +629,7 @@
             <key>to</key>
             <value>
                 <name>to</name>
-                <entities>
-                    <entity>Newton</entity>
-                </entities>
+                <entities/>
                 <count>2</count>
             </value>
         </entry>

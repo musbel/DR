@@ -41,7 +41,7 @@ public class AnalysisExecution implements ExecutionUnit
 				
 				for ( String entity : namedEntities )
 				{
-					if ( entity.contains( word ) )
+					if ( tokeniser.match( entity, word ) )
 					{
 						wordObj.addNamedEntity( entity );
 					}

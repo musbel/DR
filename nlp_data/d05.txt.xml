@@ -657,10 +657,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>Japan</entity>
-                    <entity>North America</entity>
-                </entities>
+                <entities/>
                 <count>3</count>
             </value>
         </entry>

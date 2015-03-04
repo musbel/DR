@@ -554,9 +554,7 @@
             <key>be</key>
             <value>
                 <name>be</name>
-                <entities>
-                    <entity>Albert Einstein</entity>
-                </entities>
+                <entities/>
                 <count>1</count>
             </value>
         </entry>
@@ -803,9 +801,7 @@
             <key>a</key>
             <value>
                 <name>a</name>
-                <entities>
-                    <entity>James Clerk Maxwell</entity>
-                </entities>
+                <entities/>
                 <count>1</count>
             </value>
         </entry>
@@ -937,10 +933,7 @@
             <key>to</key>
             <value>
                 <name>to</name>
-                <entities>
-                    <entity>Newton</entity>
-                    <entity>Isaac Newton</entity>
-                </entities>
+                <entities/>
                 <count>4</count>
             </value>
         </entry>

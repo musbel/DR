@@ -43,7 +43,7 @@ public class TestTools
 	}
 
 	@Test
-	public void ngramTest()
+	public void testNGram()
 	{
 		String sentence = "I just saw the Prince of Wales today.";
 		SimpleTokeniser tokeniser = new SimpleTokeniser();
@@ -57,6 +57,7 @@ public class TestTools
 			if ( ngram.equals( "Prince of Wales" ) )
 			{
 				found = true;
+				break;
 			}
 		}
 
@@ -64,7 +65,7 @@ public class TestTools
 	}
 
 	@Test
-	public void entityTest()
+	public void testNamedEntities()
 	{
 		NamedEntities entities = NamedEntities.getInstance( entityFilename );
 		

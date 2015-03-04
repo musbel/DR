@@ -39,7 +39,7 @@ import dr.nlp.tools.SimpleTokeniser;
 /** ASSUMPTIONS, LIMITATIONS AND DESIGN CONSIDERATIONS
  * - English language only. Some languages don't necessarily seperate words using a
  *   whitespace, and common things like dates differ between languages (and even
- *   counties that use the same language).
+ *   countries that use the same language).
  * - Sentences are a part of a document object which contains a hash map of words
  *   for that document. Aggregating documents is treated as a separate process which
  *   is not done here.
@@ -52,7 +52,7 @@ import dr.nlp.tools.SimpleTokeniser;
  * - Separation of responsibilities: The data processing and the data model is kept
  *   separate here, where the tokeniser and sentence analyser only use string objects,
  *   and the actual data is built afterwards.
- * - No known list of abbreviation is used which means punctuations at the end of
+ * - No known list of abbreviation is used which means punctuation at the end of
  *   words like 'Inc.' will be considered a sentence boundary.
  * - Boundary issues not covered: 
  *     - Names such as Yahoo!, E! Entertainment, etc.

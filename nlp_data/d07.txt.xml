@@ -491,9 +491,7 @@
             <key>on</key>
             <value>
                 <name>on</name>
-                <entities>
-                    <entity>Oracle Corporation</entity>
-                </entities>
+                <entities/>
                 <count>1</count>
             </value>
         </entry>

@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class NamedEntities
 {
 	private static NamedEntities instance = null;
+	
 	private static HashMap<String, Integer> entities;
 	private static String entityFile;
 	private static int maxEntityTokens;

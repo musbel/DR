@@ -327,9 +327,7 @@
             <key>in</key>
             <value>
                 <name>in</name>
-                <entities>
-                    <entity>Carl Benjamin Boyer</entity>
-                </entities>
+                <entities/>
                 <count>4</count>
             </value>
         </entry>
